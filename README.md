@@ -28,35 +28,21 @@ Testing the webserver
 
 ## PROGRAM:
 ```
-from http.server import HTTPServer,BaseHTTPRequestHandler
-
-content='''
-<!doctype html>
-<html>
-<head>
-<title> My Web Server</title>
-</head>
-<body>
-<h1>Top Five Web Application Development Frameworks</h1>
-<h2>1.Django</h2>
-<h2>2. MEAN Stack</h2>
-<h2>3. React </h2>
-</body>
-</html>
-
-
-class MyServer(BaseHTTPRequestHandler):
-    def do_GET(self):
-        print("Get request received...")
-        self.send_response(200) 
-        self.send_header("content-type", "text/html")       
-        self.end_headers()
-        self.wfile.write(content.encode())
-
-print("This is my webserver") 
-server_address =('keerthi',2323)
-httpd = HTTPServer(server_address,MyServer)
-httpd.serve_forever()
+import socket
+HOST , PORT = '127.0.0.1',65432
+with socket.create_server((HOST,PORT)) as s:
+    conn, addr = s.accept()
+    with conn:
+        print(f'connected by {addr}')
+        while data := conn.recv(1024):
+            conn.sendall(data)
+```
+```
+import socket
+HOST, PORT = '127.0.0.1',65432
+with socket.create_connection((HOST, PORT)) as s:
+    s.sendall(b'vijay ,212223040236')
+    print(f'Received: {s.recv(1024)!r}')
 ```
 ##  Architecture Diagram
 
